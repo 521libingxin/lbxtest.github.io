@@ -24,6 +24,7 @@
 		    	startmove = false;
 		    }
 		    function start(event){
+		    	event.preventDefault();
 		    	if(!startmove){
 			        var event = event || window.event;
 			        t_start_x = event.touches[0].clientX;
@@ -33,6 +34,7 @@
 		    	}
 		    }
 		    function move(event){
+		    	event.preventDefault();
 		    	if(startmove){
 				        var event = event || window.event;
 		            t_end_x = event.touches[0].clientX;
