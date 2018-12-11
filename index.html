@@ -9,11 +9,37 @@
   
   <body style="padding:0;margin:0;overflow: hidden;">
   	
-  	<canvas style="border-bottom:1px solid #ccc;" height="500" width="500" id="myCanvas" ></canvas>
-    
+  	<canvas style="border-bottom:1px solid #ccc;" height="240" id="myCanvas" ></canvas>
+    <button onclick="clearcanvas()">清空</button><br>
+    <span>字体大小：</span>
+    <select id="myselect">
+    	<option value="1">1</option>	
+    	<option value="2">2</option>	
+    	<option value="3">3</option>	
+    	<option value="4">4</option>	
+    	<option value="5">5</option>	
+    	<option value="6">6</option>	
+    </select><br>
+    <span>颜色：</span>
+    <select id="mycolor">
+    	<option value="black">黑</option>	
+    	<option value="red">红</option>	
+    	<option value="blue">蓝</option>	
+    	<option value="green">绿</option>
+    </select><br>
     <script>
+    	console.log(document.body.clientWidth);
+    		var pagewidth = document.body.clientWidth;
+    		var pageheight = pagewidth*2/3;
     		var c=document.getElementById("myCanvas");
+    		c.setAttribute("width",pagewidth);
+    		c.setAttribute("height",pageheight);
 				var ctx=c.getContext("2d");
+				var img = new Image();
+				img.src="img/back.jpg";
+				img.onload = function(){
+					ctx.drawImage(img, 0, 0);
+				}
 		    var t_start_x = 0;
 		    var t_start_y = 0;
 		    var startmove = false;
@@ -23,7 +49,11 @@
 		    function end(){
 		    	startmove = false;
 		    }
+		    var linewidth = 1;
+		    var linecolor = 'black';
 		    function start(event){
+		    	linewidth = document.getElementById("myselect").value;
+		    	linecolor = document.getElementById("mycolor").value;
 		    	event.preventDefault();
 		    	if(!startmove){
 			        var event = event || window.event;
@@ -43,12 +73,17 @@
 		    				
 		    				ctx.beginPath();
 								ctx.lineCap="round";
+								ctx.lineWidth=linewidth;
+								ctx.strokeStyle=linecolor;
 								ctx.moveTo(t_start_x,t_start_y);
 								ctx.lineTo(t_end_x,t_end_y);
 								ctx.stroke();
 								t_start_x = t_end_x;
 								t_start_y = t_end_y;
 		    	}
+		    }
+		    function clearcanvas(){
+		    	ctx.drawImage(img, 0, 0);
 		    }
     </script>
   </body>
